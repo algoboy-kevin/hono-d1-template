@@ -1,0 +1,93 @@
+{
+    "scripts": {
+      "lint": "eslint \"src/**/*.ts\" --fix",
+      "dev": "wrangler dev src/index.ts",
+      "deploy": "wrangler deploy --minify src/index.ts",
+      "test": "jest --forceExit --silent",
+      "db:delete": "npx wrangler d1 delete",
+      "db:create": "npx wrangler d1 create",
+      "migrate:create": "npx wrangler d1 migrations create",
+      "migrate:init": "mkdir -p migrations && touch migrations/0001_init.sql && npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0001_init.sql",
+      "migrate:fill": "npx prisma migrate diff --from-local-d1 --to-schema-datamodel ./prisma/schema.prisma --script > migrations/$(ls -t ./migrations | head -n1)",
+      "migrate:apply": "npx wrangler d1 migrations apply",
+      "prisma:generate": "npx prisma generate"
+    },
+    "dependencies": {
+      "@hono/swagger-ui": "^0.4.0",
+      "@hono/zod-openapi": "^0.14.8",
+      "@prisma/adapter-d1": "^5.16.1",
+      "@prisma/client": "^5.16.1",
+      "axios": "^1.7.6",
+      "hono": "^4.3.2",
+      "prisma": "^5.16.1"
+    },
+    "devDependencies": {
+      "@babel/plugin-transform-modules-commonjs": "^7.24.7",
+      "@cloudflare/workers-types": "^4.20240208.0",
+      "@eslint/js": "^9.9.0",
+      "@types/jest": "^29.5.12",
+      "@types/node": "^20.14.8",
+      "esbuild": "^0.23.1",
+      "esbuild-jest": "^0.5.0",
+      "eslint": "^9.9.0",
+      "eslint-config-prettier": "^9.1.0",
+      "eslint-plugin-import": "^2.29.1",
+      "eslint-plugin-prettier": "^5.2.1",
+      "eslint-plugin-simple-import-sort": "^12.1.1",
+      "globals": "^15.9.0",
+      "jest": "^29.7.0",
+      "jest-environment-miniflare": "^2.14.2",
+      "prettier": "3.3.3",
+      "ts-jest": "^29.1.5",
+      "typescript-eslint": "^8.1.0",
+      "wrangler": "^3.78.11"
+    },
+    "jest": {
+      "setupFiles": [
+        "dotenv/config"
+      ],
+      "coverageReporters": [
+        "text-summary",
+        "text"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "json",
+        "ts"
+      ],
+      "rootDir": "src",
+      "testRegex": ".*\\.spec\\.ts$",
+      "transform": {
+        "^.+\\.(t|j)s$": [
+          "ts-jest",
+          {
+            "diagnostics": {
+              "ignoreCodes": [
+                "TS151001"
+              ]
+            }
+          }
+        ]
+      },
+      "collectCoverageFrom": [
+        "**/*.(t|j)s"
+      ],
+      "coverageDirectory": "../coverage",
+      "testEnvironment": "node",
+      "coveragePathIgnorePatterns": [
+        "global.d.ts",
+        "/state",
+        "index\\.ts",
+        "schema\\.ts",
+        "\\.dto\\.ts$",
+        "\\.interface\\.ts$"
+      ],
+      "coverageThreshold": {
+        "global": {
+          "statements": 85
+        }
+      },
+      "collectCoverage": true
+    }
+  }
+  

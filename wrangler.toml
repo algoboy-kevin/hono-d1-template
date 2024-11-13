@@ -1,0 +1,38 @@
+name = "hono-d1-services"
+compatibility_date = "2024-04-03"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+SECRET_KEY = "admin"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hono-db"
+database_id = ""
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "R2_BUCKET"
+# bucket_name = "r2-bucket-test"
+
+# [[r2_buckets]]
+# binding = "IMAGE_BUCKET"
+# bucket_name = "wojax-image-bucket-xyz"
+
+# [[queues.producers]]
+# binding = "HONOQUEUE"
+# queue = "hono-queue"
+
+# [[queues.consumers]]
+# queue = "hono-queue"
+# max_batch_size = 32
+# max_batch_timeout = 2
+# max_retries = 3
+# dead_letter_queue = "hono-queue-dlq"
+# max_concurrency = 1
+
+# [triggers]
+# crons = ["0 0 * * *", "0 */12 * * *", "0 */3 * * *"]
